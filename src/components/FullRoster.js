@@ -1,21 +1,25 @@
-import React from 'react'
-import PlayerAPI from '../api'
+import React,{Component} from 'react'
 import { Link } from 'react-router-dom'
-
-// The FullRoster iterates over all of the players and creates
-// a link to their profile page.
-const FullRoster = () => (
-  <div>
+import {connect} from 'react-redux';
+class FullRoster extends Component {
+  render(){
+  return <div>
     <ul>
       {
-        PlayerAPI.all().map(p => (
-          <li key={p.number}>
-            <Link to={`/roster/${p.number}`}>{p.name}</Link>
+        this.props.products.map(p => (
+          <li key={p._id}>
+            <Link to={`/roster/${p._id}`}>{p.name}</Link>
           </li>
         ))
       }
     </ul>
   </div>
-)
+  }
+}
 
-export default FullRoster
+function mapStatetoProps(state){
+  return {
+    products : state.products
+  }
+}
+export default connect(mapStatetoProps)(FullRoster);
